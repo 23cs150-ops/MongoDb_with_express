@@ -1,0 +1,47 @@
+<!DOCTYPE html> 
+<html lang="en">    
+<head>        
+    <meta charset="UTF-8">        
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">        
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">        
+    <title>users data</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Chats between sujal and gopi</h1><hr/>
+
+    <div class="chat-container">
+        <% chats.forEach(chat => { %>
+            <div class="chat-bubble <%= chat.from && chat.from.trim().toLowerCase() === 'sujal' ? 'right' : 'left' %>">
+
+                <div class="message">
+                    <%= chat.message %>
+                </div>
+
+                <div class="meta">
+                    <span>
+                        <%= chat.created_st 
+                            ? new Date(chat.created_st).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) 
+                            : "" %>
+                    </span>
+                </div>
+
+                <div class="actions">
+                    <form action="/chats/<%= chat._id %>/edit" method="get">
+                        <button>Edit</button>
+                    </form>
+
+                    <form action="/chats/<%= chat._id %>/delete" method="POST">
+                        <button>Delete</button>
+                    </form>
+                </div>
+
+            </div>
+        <% }) %>
+    </div>
+
+    <form action="/chats/new" method="get">
+        <button class="new-btn">New Chat</button>
+    </form>
+</body>
+</html>
